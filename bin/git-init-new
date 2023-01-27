@@ -1,0 +1,19 @@
+#!/bin/sh
+set -x
+
+git remote add origin git@github.com:joelparkerhenderson/aberystwyth-wales-book.git
+git branch -M main
+git push -u origin main
+
+for x in README.md .gitignore Makefile aberystwyth-wales-book.md; do
+    g a "$x" && git cm "Add $x"
+done
+
+find bin -type f | sort | while read -r x; do 
+    git a "$x" && git cm "Add $x"
+    test -d "$x.d" && git a "$x.d" && git cm "Add $x.d"
+done
+
+find images -type d -iname "*jpg" | sort | while read -r x; do git a "$x" && git cm "Add $x"; done
+
+git s

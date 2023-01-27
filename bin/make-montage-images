@@ -1,0 +1,18 @@
+#!/bin/sh
+
+src="$HOME/git/joelparkerhenderson/my-site-pix/pix"
+dst="build/montage/images"
+
+if [ ! -d "$dst" ]; then
+    mkdir -p "$dst"
+    cat images.txt | grep '\.jpg$' | 
+    for page in $(seq 1 40); do
+        echo "page: $page"
+        read -r x0
+        read -r x1
+        read -r x2
+        read -r x3
+        echo $x0 $x1 $x2 $x3
+        montage -tile 2x2 -geometry 640x640+40+40 -border 0 "$src/$x0" "$src/$x1" "$src/$x2" "$src/$x3" "$dst/$page.jpg"
+    done
+fi
